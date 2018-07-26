@@ -1,0 +1,233 @@
+
+<!--
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Git for beginners</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <style type="text/css">
+      @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
+      @import url(https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic);
+      @import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);
+      body { font-family: 'Droid Serif'; }
+      h1, h2, h3 {
+        font-family: 'Yanone Kaffeesatz';
+        font-weight: normal;
+      }
+      .remark-code, .remark-inline-code { font-family: 'Ubuntu Mono'; }
+    </style>
+  </head>
+  <body>
+    <textarea id="source">
+-->
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Git for beginners</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <style type="text/css">
+
+      /* Slideshow styles */
+      body {
+        font-family: 'DejaVu Sans';
+        font-size: 20px;
+      }
+      h1, h2, h3 {
+        font-weight: 400;
+        margin-bottom: 0;
+        font-family: 'Lato Heavy';
+      }
+      h1 { font-size: 3em; }
+      h2 { font-size: 2em; }
+      h3 { font-size: 1.6em; }
+      a, a > code {
+        text-decoration: none;
+      }
+      code {
+        -moz-border-radius: 5px;
+        -web-border-radius: 5px;
+        background: #e7e8e2;
+        border-radius: 5px;
+        font-size: 16px;
+        font-family: 'Source Code Pro'; 
+      }
+      .slidefooter {
+        position: absolute;
+        bottom: 1em;
+        left: 1em;
+        font-size: 0.6em;
+      }
+       .float-right {
+        float: right;
+      }
+       .float-left {
+        float: left;
+      }
+      .remark-code, .remark-inline-code { font-family: 'Source Code Pro'; }
+    </style>
+  </head>
+
+  <body>
+    <textarea id="source">
+
+
+# Part 2
+
+## Moving HEAD
+
+---
+
+layout: true
+
+.slidefooter[Git for beginners :: Neil Smith :: `@neilnjae`]
+
+---
+
+.float-right[![Before reset](reset-before.png)]
+
+# Moving HEAD
+
+## `git reset`
+
+* Moves `HEAD` (mostly)
+* Changes Index and working directory (mostly)
+
+## Seeing the log
+
+`gitk` shows it graphically
+
+* `$ git log`
+* `$ git log --oneline -n 2`
+
+---
+
+.float-right[![Before reset](reset-mixed-after.png)]
+
+# Mixed reset
+
+## `$ git reset HEAD~ --mixed`
+
+* Default behaviour
+
+1. Moves `HEAD` to specified commit
+2. Changes Index
+3. Preserves working directory
+
+Back to the position where you'd just committed `HEAD~`
+* Undoes `commit`
+* Undoes `add`
+
+---
+
+.float-right[![Before reset](reset-soft-after-new-commit.png)]
+
+# Mixed reset: why
+
+## `$ git reset HEAD~`
+
+Get rid of a blind alley.
+
+### Rewind history
+
+* Can rewind several commits
+
+* Orphaned commit 2acad38 will eventually be tidied away by Git
+
+---
+
+# Unstage a file: undo add
+
+`$ git reset HEAD file.txt`
+
+.float-left[![Before reset](reset-unstage-before.png)]
+.float-right[![Before reset](reset-unstage-after.png)]
+
+---
+
+.float-right[![Before reset](reset-soft-after.png)]
+
+# Soft reset
+
+## `$ git reset HEAD~ --soft`
+
+1. Moves `HEAD` to specified commit
+2. Preserves Index
+3. Preserves working directory
+
+Back to the position where you'd just committed `HEAD~`
+* Undoes `commit`
+* Keeps `add`
+
+### Useful for skipping intermediate commits
+
+---
+
+.float-right[![Before reset](reset-hard-after.png)]
+
+# Hard reset
+
+## `$ git reset HEAD~ --hard`
+
+1. Moves `HEAD` to specified commit
+2. Changes Index
+3. **Changes working directory**
+
+Back to before you'd even _thought_ about moving on from the new `HEAD`
+
+## Use case: clearing up disasters
+
+`$ git reset HEAD --hard`
+
+---
+
+# Tracked, untracked, ignore
+
+* `git add` tells git to:
+  1. Track a file
+  2. Add it to index
+
+    Tracked files are tracked forever
+
+* `.gitignore` is a file describing things Git will ignore
+  * Won't track them, won't moan
+  * Minified files, images, etc.
+
+---
+
+.float-right[![expanding brain 2](expanding-brain-2.jpg)]
+
+# End of part 2
+
+* Moving `HEAD`
+* Mixed, soft, hard `reset`s
+
+## Hard reset to your third "Adding a section" commit
+
+## Take a break, get some coffee
+
+    </textarea>
+    <script src="https://remarkjs.com/downloads/remark-latest.min.js" type="text/javascript">
+    </script>
+
+    <script type="text/javascript"
+      src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML&delayStartupUntil=configured"></script>
+
+    <script type="text/javascript">
+      var slideshow = remark.create({ ratio: "16:9" });
+
+      // Setup MathJax
+      MathJax.Hub.Config({
+        tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+        }
+      });
+      MathJax.Hub.Queue(function() {
+        $(MathJax.Hub.getAllJax()).map(function(index, elem) {
+            return(elem.SourceElement());
+        }).parent().addClass('has-jax');
+      });
+      MathJax.Hub.Configured();
+    </script>
+  </body>
+</html>

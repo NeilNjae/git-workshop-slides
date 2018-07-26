@@ -1,0 +1,351 @@
+
+<!--
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Git for beginners</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <style type="text/css">
+      @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
+      @import url(https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic);
+      @import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);
+      body { font-family: 'Droid Serif'; }
+      h1, h2, h3 {
+        font-family: 'Yanone Kaffeesatz';
+        font-weight: normal;
+      }
+      .remark-code, .remark-inline-code { font-family: 'Ubuntu Mono'; }
+    </style>
+  </head>
+  <body>
+    <textarea id="source">
+-->
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Git for beginners</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <style type="text/css">
+
+      /* Slideshow styles */
+      body {
+        font-family: 'DejaVu Sans';
+        font-size: 20px;
+      }
+      h1, h2, h3 {
+        font-weight: 400;
+        margin-bottom: 0;
+        font-family: 'Lato Heavy';
+      }
+      h1 { font-size: 3em; }
+      h2 { font-size: 2em; }
+      h3 { font-size: 1.6em; }
+      a, a > code {
+        text-decoration: none;
+      }
+      code {
+        -moz-border-radius: 5px;
+        -web-border-radius: 5px;
+        background: #e7e8e2;
+        border-radius: 5px;
+        font-size: 16px;
+        font-family: 'Source Code Pro'; 
+      }
+      .slidefooter {
+        position: absolute;
+        bottom: 1em;
+        left: 1em;
+        font-size: 0.6em;
+      }
+       .float-right {
+        float: right;
+      }
+       .float-left {
+        float: left;
+      }
+      .remark-code, .remark-inline-code { font-family: 'Source Code Pro'; }
+    </style>
+  </head>
+
+  <body>
+    <textarea id="source">
+
+# Part 4
+
+## Remotes and pull
+
+---
+
+layout: true
+
+.slidefooter[Git for beginners :: Neil Smith :: `@neilnjae`]
+
+---
+
+# _Distributed_ version control system
+
+Everone has their own complete copy of the repo
+
+Github (or others) just a convenient place for sharing
+
+### For a sole developer
+Github is
+* showcase
+* backup
+* moving between machines
+
+---
+
+# Github and keys: who can write to a repo?
+
+### git/ssh protocol
+* crypto key identifies machines
+* tell Github the keys
+* works seamlessly
+* effort to set up
+
+### https protocol
+* no setup
+* give password with every change
+
+### Github Desktop app
+* no setup
+* no password needed
+* limited
+
+---
+
+# Publishing with Github desktop
+
+Connect to your account
+
+Add a local repository
+
+Publish
+
+Look on Github
+
+---
+
+exclude: true
+
+# Create new repo on Github
+
+.float-right[![Make new repo](make-new-repo.png)]
+
+`$ git checkout master`
+
+`$ git remote add origin  git@github.com:NeilNjae/neils-git-workshop.git`
+
+`git push --set-upstream origin master`
+
+Refresh the view on Github
+
+---
+
+# Danger: public commits shouldn't be changed
+
+`git revert` "undoes" a commit
+
+Creates a _new_ commit that does the inverse changes
+
+---
+
+# Concept: remote
+
+Any number of remotes
+
+Typically, just one, nicknamed `origin`
+
+`$ git show remote -v`
+
+---
+
+# Concept: remote branches
+
+A branch on a remote
+
+Called `<remote name>/<branch name>`
+* `origin/master`
+* `origin/capitals`
+
+_You_ can't move them
+
+* `git branch ftr origin/feature` to create them
+* `git fetch` updates the pointers
+* `git branch -d origin/feature` deletes your pointer to it
+
+Remote branches update as others change them
+
+---
+
+# Concept: remote tracking branches
+
+A _local_ branch that's connected to a _remote_ ("upstream") branch
+
+`git fetch` will update remote pointers
+
+`git pull` will `fetch` **and** `merge` changes into your local branch
+
+`git push` will apply your local commits to that remote branch
+
+`git push --set-upstream origin new_branch` pushes, and sets upstream
+* ...if you authenticate on the command line
+
+---
+
+# Update and push
+
+* Create, checkout a new  branch
+* Create a new file on this branch
+* `$ git log --oneline`
+* Refresh `gitk`
+* Push the changes (use Github Desktop)
+* Refresh the repo on Github website
+* `$ git log --oneline`
+* Refresh `gitk`
+
+---
+
+# Concept: Fork vs clone
+
+**Fork** makes a copy of somone else's repo, places it in your account
+* remembers where it came from
+* Github extension (now others too)
+* Not part of Git itself
+
+**Clone** makes a copy of a repo, copies it to your PC
+* keeps the source as the `origin` remote
+* Don't need to fork first (but can't make changes to _that_ repo)
+
+---
+
+# Github collaboration models
+
+## Separate repos
+* One "blessed repo"
+  * Limited access
+* Each person has own forked version
+* Changes proposed by "pull requests"
+* Maintainer adds the approved one
+
+## Single repo
+* Everyone has access to same repo
+* (optional) Merging to `master` branch limited
+* Needs trust between collaborators
+
+---
+
+# Propose a change to another's repo
+
+1. Talk to the person on your _left_
+2. Find their repo and fork their repo (on Github website)
+3. Clone the fork to your PC (use Github Desktop)
+4. Create a new branch
+5. Add a file saying something nice about the person to your left
+   * Remember this is all public
+6. Push the change (use Github Desktop)   
+7. Create a **pull request** (use Github website)
+
+---
+
+# Handle the pull request
+
+.float-right[![Pull request](pull-request1.png)]
+
+On Github website, go back to your own repo
+
+Should see a _pull request_
+
+Look at the file, make comments.
+
+### Merge the change into your repo
+
+Delete the branch
+
+---
+
+# Invite another to work on your repo
+
+1. Talk to the person on your _right_
+2. Ask nicely if they will add you as a collaborator
+
+When you're asked, add the person 
+
+![Collaborators](add-collaborators.png)
+
+---
+
+# Collaborating
+
+Once you're a collaborator
+
+1. Clone their repo (use Github desktop)
+2. Create a new branch (however)
+3. Add a file saying something nice about the person to your right
+   * Remember this is all public
+4. Publish or Push the change (use Github Desktop)   
+5. Open a **pull request** (use Github website)
+
+![Pull request](pull-request2.png)]
+
+---
+
+.float-right[![expanding brain 4](expanding-brain-4.jpg)]
+
+# End of part 4
+
+* local and remote
+* fetch, pull, push
+* fork and clone
+* pull request
+
+## We are done!
+
+---
+
+# Good resources
+
+### Git
+
+* The [Git book](https://git-scm.com/book/en/v2)
+
+* [Official Git reference](https://git-scm.com/docs)
+
+* [Atlassian Git tutorials](https://www.atlassian.com/git/tutorials), especially the [advanced tutorials](https://www.atlassian.com/git/tutorials/advanced-overview).
+
+* [Fixing mistakes with Git](https://dev.to/vorahsa/fixing-mistakes-with-git-27a5)
+
+### Workflow
+
+* [Simple Git workflow](https://www.atlassian.com/blog/git/simple-git-workflow-simple) from Atlassian
+
+* [Creative history rewriting](https://sandofsky.com/blog/git-workflow.html)
+
+
+    </textarea>
+    <script src="https://remarkjs.com/downloads/remark-latest.min.js" type="text/javascript">
+    </script>
+
+    <script type="text/javascript"
+      src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML&delayStartupUntil=configured"></script>
+
+    <script type="text/javascript">
+      var slideshow = remark.create({ ratio: "16:9" });
+
+      // Setup MathJax
+      MathJax.Hub.Config({
+        tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+        }
+      });
+      MathJax.Hub.Queue(function() {
+        $(MathJax.Hub.getAllJax()).map(function(index, elem) {
+            return(elem.SourceElement());
+        }).parent().addClass('has-jax');
+      });
+      MathJax.Hub.Configured();
+    </script>
+  </body>
+</html>

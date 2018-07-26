@@ -1,0 +1,421 @@
+
+<!--
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Git for beginners</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <style type="text/css">
+      @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
+      @import url(https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic);
+      @import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);
+      body { font-family: 'Droid Serif'; }
+      h1, h2, h3 {
+        font-family: 'Yanone Kaffeesatz';
+        font-weight: normal;
+      }
+      .remark-code, .remark-inline-code { font-family: 'Ubuntu Mono'; }
+    </style>
+  </head>
+  <body>
+    <textarea id="source">
+-->
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Git for beginners</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <style type="text/css">
+
+      /* Slideshow styles */
+      body {
+        font-family: 'DejaVu Sans';
+        font-size: 20px;
+      }
+      h1, h2, h3 {
+        font-weight: 400;
+        margin-bottom: 0;
+        font-family: 'Lato Heavy';
+      }
+      h1 { font-size: 3em; }
+      h2 { font-size: 2em; }
+      h3 { font-size: 1.6em; }
+      a, a > code {
+        text-decoration: none;
+      }
+      code {
+        -moz-border-radius: 5px;
+        -web-border-radius: 5px;
+        background: #e7e8e2;
+        border-radius: 5px;
+        font-size: 16px;
+        font-family: 'Source Code Pro'; 
+      }
+      .slidefooter {
+        position: absolute;
+        bottom: 1em;
+        left: 1em;
+        font-size: 0.6em;
+      }
+       .float-right {
+        float: right;
+      }
+       .float-left {
+        float: left;
+      }
+      .remark-code, .remark-inline-code { font-family: 'Source Code Pro'; }
+    </style>
+  </head>
+
+  <body>
+    <textarea id="source">
+
+# Part 3
+
+## Branch and merge
+
+---
+
+layout: true
+
+.slidefooter[Git for beginners :: Neil Smith :: `@neilnjae`]
+
+---
+
+# Concept: branch
+
+### Separate, safe place to work
+
+.float-right[![Branches](branches5.png)]
+
+Free to experiment
+
+Branches are cheap
+* Just a pointer to a commt
+* Cheap to create
+* Cheap to switch between
+
+_Merge_ changes back in when you're ready
+
+### All repos come with a `master` branch
+
+---
+
+# Workflow: feature branch
+
+.float-right[![Branches](branches5.png)]
+
+### `master` is always working
+* Mature state only
+
+Generally, **one branch per feature**
+
+When feature done
+1. Merge into `master`
+2. Delete the feature branch
+
+---
+
+# Capitals branch
+
+Let's work on the "feature" of changing headers to capital letters
+
+`$ git branch capitals` : creates a new branch
+* `$ git status`
+* `$ git branch`
+* refresh `gitk`
+* `$ git checkout capitals`
+* `$ git status`
+* `$ git branch`
+
+In **just one** text file
+1. change title to uppercase
+2. change "commit 1" line to uppercase
+
+* `$ git status`
+* `$ git commit -am "Started adding capitals"`
+* `$ git status`
+* refresh `gitk`
+
+???
+
+Sublime: Edit > Convert Case > Uppercase
+
+Atom: ^K ^U
+
+Visual Studio: Ctrl + Shift + U
+
+---
+
+# Branches isolate change
+
+* `$ git status`
+
+Look at your text file
+
+* `$ git checkout master`
+* `$ git status`
+
+Look at the file again
+
+* `$ git checkout capitals`
+* `$ git status`
+
+Look at the file again
+
+(`git gui` also switches branches)
+
+---
+
+# Git keeps you safe
+
+## In capitals
+
+1. Make all-caps all the titles and "commit" headers in both files
+2. Save the file, don't `git add` or `git commit`
+3. `$ git checkout master`
+
+`$ git commit -am 'Headers now uppercase'`
+
+---
+
+# Many branches!
+
+## In master
+
+* `$ git checkout master`
+* Refresh `gitk`
+* `gitk` > File > List references
+
+Want to add extra paragraphs to both text files 
+
+.float-right[![Branches](branches1.png)]
+
+* We'll create a new branch to do that
+* `$ git branch extra_text`
+* `$ git checkout extra_text`
+
+Add a new paragraph to each text file, `add` and `commit`
+
+Refresh `gitk`
+
+---
+
+# Merging (the very easy part)
+
+## Bring the changes from _another_ branch into _this_ branch
+
+To incorporate `extra_text` branch into `master`
+
+.float-right[![Branches](branches2.png)]
+
+1. `$ git checkout master`
+2. `$ git merge extra_text`
+
+_Fast-forward_ merge: just slide the `master` branch pointer along
+
+Don't need the `extra_text` branch any more
+
+* `$ git branch -d extra_text`
+* `$ git branch`
+* Refresh `gitk`
+
+---
+
+# Merging (the not-so-easy part)
+
+To incorporate `capitals` branch into `master`
+
+.float-right[![Branches](branches3.png)]
+
+Can't fast forward
+
+Create a _new_ **merge** commit 
+
+1. `$ git checkout master`
+2. `$ git merge capitals`
+
+Refresh `gitk`
+
+.float-right[![Branches](branches4.png)]
+
+---
+
+# Sensible merging
+
+Look at one of the text files
+
+```
+# COMMIT 3
+
+I try in vain to be persuaded that the pole ...
+
+# Commit 4
+
+Its productions and features may be without example...
+```
+
+---
+
+# More log fun
+
+Refresh the view in `gitk`
+
+`$ git log --graph --oneline`
+
+`$ git log`
+
+```
+commit 94f64e551debca70bfee7a3e4e1331e936c5f627 (HEAD -> master)
+Merge: 0d8d3b5 c65cfd3
+```
+
+`master` and `capitals`
+
+
+Commit with two parents
+
+* `HEAD^1` is first parent ("mother")
+* `HEAD^2` is second parent ("father")
+* `HEAD^2^1` is second parent's first parent ("father's mother")
+* `HEAD~` always tracks first parent
+* `HEAD^2^1^1` == `HEAD^2~~` == `HEAD^2~2`
+
+---
+
+# Seeing changes
+
+`$ git diff HEAD^1`
+
+`$ git diff HEAD^2`
+
+Also in `gitk`
+
+---
+
+# Making life difficult
+
+First, undo this merge
+
+* `$ git reset HEAD^1 --hard`
+
+Create a branch `fancy`
+
+* `$ git branch fancy`
+* `$ git checkout fancy`
+
+In `fancy`, in **one file**, use fancy words for the headings
+
+Add and commit the changes
+
+* `$ git commit -am "Fancy headings"`
+
+Merge `fancy` into `master`
+
+* `$ git checkout master`
+* `$ git merge fancy`
+
+Don't delete `fancy` yet
+
+---
+
+# Merging (the hard part)
+
+When we now merge `capitals` into `master`, what should Git do?
+
+`$ git checkout master`
+
+`$ git merge captials`
+```
+Auto-merging frankenstein.txt
+CONFLICT (content): Merge conflict in frankenstein.txt
+Auto-merging carmilla.txt
+Automatic merge failed; fix conflicts and then commit the result.
+```
+
+Look in the file
+
+```
+# FRANKENSTEIN, by Mary Shelly 
+
+<<<<<<< HEAD
+# Most fancy commit line 1
+=======
+# COMMIT 1
+>>>>>>> capitals
+```
+
+---
+
+# Resolving merge conflicts
+
+### Option 1
+
+`$ git merge --abort`
+
+Chocolate
+
+---
+
+# Resolving merge conflicts
+
+```
+# FRANKENSTEIN, by Mary Shelly 
+
+<<<<<<< HEAD
+# Most fancy commit line 1
+=======
+# COMMIT 1
+>>>>>>> capitals
+```
+
+Human intervention needed to solve these problems
+```
+# Most fancy COMMIT line 1
+```
+
+* Remove the conflict markers as well
+* `add` files when all resolved
+* `commit` when done
+
+
+Look into tools like _KDiff3_ and _Meld_ for GUIs
+
+---
+
+.float-right[![expanding brain 3](expanding-brain-3.jpg)]
+
+# End of part 3
+
+* Branches
+* Merge
+* Merge conflict
+
+## Take a break, get some coffee
+
+    </textarea>
+    <script src="https://remarkjs.com/downloads/remark-latest.min.js" type="text/javascript">
+    </script>
+
+    <script type="text/javascript"
+      src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML&delayStartupUntil=configured"></script>
+
+    <script type="text/javascript">
+      var slideshow = remark.create({ ratio: "16:9" });
+
+      // Setup MathJax
+      MathJax.Hub.Config({
+        tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+        }
+      });
+      MathJax.Hub.Queue(function() {
+        $(MathJax.Hub.getAllJax()).map(function(index, elem) {
+            return(elem.SourceElement());
+        }).parent().addClass('has-jax');
+      });
+      MathJax.Hub.Configured();
+    </script>
+  </body>
+</html>

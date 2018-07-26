@@ -1,0 +1,400 @@
+
+<!--
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Git for beginners</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <style type="text/css">
+      @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
+      @import url(https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic);
+      @import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);
+      body { font-family: 'Droid Serif'; }
+      h1, h2, h3 {
+        font-family: 'Yanone Kaffeesatz';
+        font-weight: normal;
+      }
+      .remark-code, .remark-inline-code { font-family: 'Ubuntu Mono'; }
+    </style>
+  </head>
+  <body>
+    <textarea id="source">
+-->
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Git for beginners</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <style type="text/css">
+
+      /* Slideshow styles */
+      body {
+        font-family: 'DejaVu Sans';
+        font-size: 20px;
+      }
+      h1, h2, h3 {
+        font-weight: 400;
+        margin-bottom: 0;
+        font-family: 'Lato Heavy';
+      }
+      h1 { font-size: 3em; }
+      h2 { font-size: 2em; }
+      h3 { font-size: 1.6em; }
+      a, a > code {
+        text-decoration: none;
+      }
+      code {
+        -moz-border-radius: 5px;
+        -web-border-radius: 5px;
+        background: #e7e8e2;
+        border-radius: 5px;
+        font-size: 18px;
+        font-weight: 600;
+        font-family: 'Source Code Pro'; 
+              }
+      .slidefooter {
+        position: absolute;
+        bottom: 1em;
+        left: 1em;
+        font-size: 0.6em;
+      }
+       .float-right {
+        float: right;
+      }
+       .float-left {
+        float: left;
+      }
+      /* .remark-code, .remark-inline-code { font-family: 'Source Code Pro'; font-weight: 600;} */
+    </style>
+  </head>
+
+  <body>
+    <textarea id="source">
+
+# Git for beginners
+
+![Git logo](Git-logo.svg)
+
+### Neil Smith `@neilnjae`
+
+---
+
+layout: true
+
+.slidefooter[Git for beginners :: Neil Smith :: `@neilnjae`]
+
+---
+
+# What is Git?
+
+### Git is a _*distributed*_ _*version control system*_
+
+## version control system
+* Keeps track of changes
+* Fixing mistakes is easy
+
+## distributed
+* Works with teams
+* Everyone is a peer: no bosses
+
+## What is Github?
+* Just a site to make sharing easy
+
+---
+
+# Alternatives
+
+### Many distributed VCSs
+* Mercurial (aka `hg`)
+* Subversion (aka `svn`) (legacy only)
+
+### Many code sharing websites
+* Gitlab
+* Bitbucket
+
+---
+
+# Part 1
+
+## Commit and changes
+
+---
+
+# Concept: repository
+
+Everything in the project
+
+Entire history
+
+### Err towards including in repo
+* Code
+* Configuration
+* Database schema
+* Tests
+
+Things not to include:
+* Secrets (API keys)
+* Logs
+* Automatically created things (compiled or minified files, pulled-in dependencies, etc.)
+Look into `.gitignore`
+
+---
+
+# Making a repo
+
+Start `bash`
+
+```bash
+$ mkdir yourname-git-workshop
+$ cd yourname-git-workshop
+$ git init
+$ ls -a
+```
+
+## Get some source data
+
+Download your two favourtie novels from Project Gutenberg
+
+---
+
+# Make some files
+
+* Create **two** text files, one for each novel
+
+* Put the first couple of sentences of each novel in each file
+
+* Add a title and heading *commit 1* at the top of the file
+
+* Save the files in your Git repository directory
+  * (Filenames with no spaces, all lowercase, end `.txt`)
+
+```
+# Frankenstein, by Mary Shelly 
+
+# Commit 1
+
+You will rejoice to hear that no disaster has accompanied the
+commencement of an enterprise which you have regarded with such evil
+forebodings.  I arrived here yesterday, and my first task is to assure
+my dear sister of my welfare and increasing confidence in the success
+of my undertaking.
+```
+
+---
+
+# Concept: commit
+
+.float-right[![A simple history](simple-history.png)]
+
+A **commit** is a snapshot of a project
+
+It contains all the files in all the the directories in the project
+* Taken at a particular point in time
+* Has a unique key (`1dbb1a9`)
+* Exists forever in the history
+
+Each commit knows its parent(s)
+
+Commits are cheap (just changes from parent)
+
+## You can *always* refer to another commit, get files from it
+
+---
+
+# Making a first commit
+
+.float-right[![commit 0](commit0.png)]
+
+Fire up `$ git gui &`
+
+1. Stage changed
+   * Confirm "stage untracked files"
+2. Give a commit message
+3. Commit
+
+Fire up `$ gitk &`
+
+---
+
+# Two more commits
+
+.float-right[![Initial three commits](three-commits.png)]
+
+* In each file, add another paragraph
+* Head the paragraph with "commit _n_" heading
+* Commit it
+
+```
+# Frankenstein, by Mary Shelly 
+
+# Commit 1
+
+You will rejoice to hear that no disaster has accompanied ...
+
+# Commit 2
+
+I am already far north of London, and as I walk in the streets ...
+
+# Commit 3
+
+I try in vain to be persuaded that the pole is the seat of ...
+```
+
+---
+
+# Let's make a mistake!
+
+In one of your files, replace all the `e` with `!`
+
+.float-right[![Mistake 1](mistake1.png)]
+
+(This is wrong)
+
+Save the file
+
+Check the wrong file is on disk
+* `$ cat frankenstein.txt`
+
+---
+
+# Undoing a mistake
+
+Rescan in `git-gui`
+
+Select the file in `git-gui`
+
+Commit -> Revert changes
+
+(Accept the warning)
+
+Refresh the file in the text editor
+
+Feel happy
+
+## But what happened?
+
+---
+
+# Concept: three trees
+
+("Tree" means collection of files and folders; a "directory tree")
+
+![Three trees](three-trees.png)
+
+???
+
+### Working directory
+* What's on your hard disk
+
+### Staging area / Index
+* What's going into the next commit
+
+### HEAD
+* The "current" commit
+
+---
+
+# Command line fun!
+
+.float-right[![Three trees](three-trees.png)]
+
+1. `$ git status`
+2. Replace all the `e` with `!`
+3. `$ git status`
+4. `$ git checkout -- frankenstein.txt`
+5. `$ git status`
+6. Check the file
+
+Note: `git checkout` takes arguments 
+
+`$ git checkout <commit> [--] <file> <file> ...`
+
+If you don't specify a commit, Git assumes you mean `HEAD`
+
+??? 
+
+Lots of `git status` commands to see what's going on as we do things
+
+---
+
+# Let's really mess things up!
+
+.float-right[![Checkout from earlier commit](checkout-from-earlier-commit.png)]
+
+1. `$ git status`
+2. Replace all the `e` with `!`
+3. `$ git status`
+4. `$ git add frankenstein.txt`
+5. `$ git status`
+6. `$ git commit -m "No more vowels"`
+7. `$ git status`
+
+### What have we done?
+### How do we get the good file back?
+`$ git checkout <commit> [--] <file> <file> ...`
+
+Hint: `HEAD~` means "parent of `HEAD`"
+* Note difference between `~` (tilde) and `-` (dash)
+
+---
+
+# Let's really mess things up!
+
+.float-right[![Checkout from earlier commit after checkout](checkout-from-earlier-commit-after-checkout.png)]
+
+1. `$ git status`
+2. Replace all the `e` with `!`
+3. `$ git status`
+4. `$ git add frankenstein.txt`
+5. `$ git status`
+6. `$ git commit -m "No more vowels"`
+7. `$ git status`
+
+## Fixed with
+
+`$ git checkout HEAD~ -- frankenstein.txt`
+
+* `HEAD~` is "Parent of `HEAD`"
+* `HEAD~~` or `HEAD~2` is "Grandparent of `HEAD`"
+* `HEAD~~~` or `HEAD~3` is "Great grandparent of `HEAD`"
+
+
+---
+
+.float-right[![expanding brain 1](expanding-brain-1.jpg)]
+
+# End of part 1
+
+* Repositories
+* Commits
+* Three trees
+* `add`, `commit`, `checkout`
+
+## Take a break, get some coffee
+
+    </textarea>
+    <script src="https://remarkjs.com/downloads/remark-latest.min.js" type="text/javascript">
+    </script>
+
+    <script type="text/javascript"
+      src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML&delayStartupUntil=configured"></script>
+
+    <script type="text/javascript">
+      var slideshow = remark.create({ ratio: "16:9" });
+
+      // Setup MathJax
+      MathJax.Hub.Config({
+        tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+        }
+      });
+      MathJax.Hub.Queue(function() {
+        $(MathJax.Hub.getAllJax()).map(function(index, elem) {
+            return(elem.SourceElement());
+        }).parent().addClass('has-jax');
+      });
+      MathJax.Hub.Configured();
+    </script>
+  </body>
+</html>
