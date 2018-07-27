@@ -49,8 +49,9 @@
         -web-border-radius: 5px;
         background: #e7e8e2;
         border-radius: 5px;
-        font-size: 16px;
-        font-family: 'Source Code Pro'; 
+        font-size: 1em; /*18px; */
+        font-weight: 600;
+        font-family: 'Source Code Pro';
       }
       .slidefooter {
         position: absolute;
@@ -64,7 +65,7 @@
        .float-left {
         float: left;
       }
-      .remark-code, .remark-inline-code { font-family: 'Source Code Pro'; }
+      /* .remark-code, .remark-inline-code { font-family: 'Source Code Pro'; } */
     </style>
   </head>
 
@@ -88,7 +89,7 @@ layout: true
 
 # Moving HEAD
 
-## `git reset`
+### `git reset`
 
 * Moves `HEAD` (mostly)
 * Changes Index and working directory (mostly)
@@ -106,7 +107,7 @@ layout: true
 
 # Mixed reset
 
-## `$ git reset HEAD~ --mixed`
+### `$ git reset HEAD~ --mixed`
 
 * Default behaviour
 
@@ -124,7 +125,7 @@ Back to the position where you'd just committed `HEAD~`
 
 # Mixed reset: why
 
-## `$ git reset HEAD~`
+### `$ git reset HEAD~`
 
 Get rid of a blind alley.
 
@@ -138,7 +139,7 @@ Get rid of a blind alley.
 
 # Unstage a file: undo add
 
-`$ git reset HEAD file.txt`
+### `$ git reset HEAD file.txt`
 
 .float-left[![Before reset](reset-unstage-before.png)]
 .float-right[![Before reset](reset-unstage-after.png)]
@@ -149,7 +150,7 @@ Get rid of a blind alley.
 
 # Soft reset
 
-## `$ git reset HEAD~ --soft`
+### `$ git reset HEAD~ --soft`
 
 1. Moves `HEAD` to specified commit
 2. Preserves Index
@@ -167,7 +168,7 @@ Back to the position where you'd just committed `HEAD~`
 
 # Hard reset
 
-## `$ git reset HEAD~ --hard`
+### `$ git reset HEAD~ --hard`
 
 1. Moves `HEAD` to specified commit
 2. Changes Index

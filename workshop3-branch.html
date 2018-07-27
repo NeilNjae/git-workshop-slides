@@ -49,7 +49,8 @@
         -web-border-radius: 5px;
         background: #e7e8e2;
         border-radius: 5px;
-        font-size: 16px;
+        font-size: 1em; /*18px; */
+        font-weight: 600;
         font-family: 'Source Code Pro'; 
       }
       .slidefooter {
@@ -64,7 +65,7 @@
        .float-left {
         float: left;
       }
-      .remark-code, .remark-inline-code { font-family: 'Source Code Pro'; }
+      /* .remark-code, .remark-inline-code { font-family: 'Source Code Pro'; } */
     </style>
   </head>
 
@@ -121,6 +122,7 @@ When feature done
 
 Let's work on the "feature" of changing headers to capital letters
 
+.float-right[![Branches](branch00.png)]
 `$ git branch capitals` : creates a new branch
 * `$ git status`
 * `$ git branch`
@@ -132,6 +134,8 @@ Let's work on the "feature" of changing headers to capital letters
 In **just one** text file
 1. change title to uppercase
 2. change "commit 1" line to uppercase
+
+.float-right[![Branches](branch01.png)]
 
 * `$ git status`
 * `$ git commit -am "Started adding capitals"`
@@ -234,7 +238,7 @@ Can't fast forward
 Create a _new_ **merge** commit 
 
 1. `$ git checkout master`
-2. `$ git merge capitals`
+2. `$ git merge capitals -m "Merging captials as headers"`
 
 Refresh `gitk`
 
@@ -326,7 +330,7 @@ When we now merge `capitals` into `master`, what should Git do?
 
 `$ git checkout master`
 
-`$ git merge captials`
+`$ git merge captials -m "Merging captials as headers"`
 ```
 Auto-merging frankenstein.txt
 CONFLICT (content): Merge conflict in frankenstein.txt
@@ -377,7 +381,7 @@ Human intervention needed to solve these problems
 
 * Remove the conflict markers as well
 * `add` files when all resolved
-* `commit` when done
+* `$ git commit -m "Merging captials as headers"` when done
 
 
 Look into tools like _KDiff3_ and _Meld_ for GUIs
