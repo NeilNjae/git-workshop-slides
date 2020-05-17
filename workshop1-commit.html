@@ -165,6 +165,7 @@ $ mkdir yourname-git-workshop
 $ cd yourname-git-workshop
 $ git init
 $ ls -a
+.  ..  .git
 ```
 
 ## Get some source data
@@ -217,18 +218,59 @@ Commits are cheap (just changes from parent)
 
 ---
 
-# Making a first commit
+# Making a first commit (1)
 
-.float-right[![commit 0](commit0.png)]
+Nothing to see here
 
-Fire up `$ git gui &`
+```
+$ git status
+On branch master
 
-1. Stage changed
-   * Confirm "stage untracked files"
-2. Give a commit message, e.g. <br>_First commit_
-3. Commit
+No commits yet
 
-Fire up `$ gitk &`
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+        carmilla.txt
+        frankenstein.txt
+
+nothing added to commit but untracked files present (use "git add" to track)
+```
+
+---
+
+# Making a first commit (2)
+
+ Add the files
+
+```
+$ git add --all
+$ git status
+On branch master
+
+No commits yet
+
+Changes to be committed:
+  (use "git rm --cached <file>..." to unstage)
+        new file:   carmilla.txt
+        new file:   frankenstein.txt
+```
+
+---
+
+# Making a first commit (3)
+
+* Make the commit
+
+```
+$ git commit -m "First commit"
+[master (root-commit) 0a411f8] First commit
+ 2 files changed, 33 insertions(+)
+ create mode 100644 carmilla.txt
+ create mode 100644 frankenstein.txt
+$ git status
+On branch master
+nothing to commit, working tree clean
+```
 
 ---
 
@@ -265,7 +307,18 @@ I try in vain to be persuaded that the pole is the seat of ...
 
 In one of your files, replace all the `e` with `!`
 
-.float-right[![Mistake 1](mistake1.png)]
+```
+# C!mm!t 1
+
+## L!tt!r 1
+
+_T! Mrs. S!v!ll!, !ngl!nd._
+
+St. P!t!rsb!rgh, D!c. 11th, 17—.
+Y!! w!ll r!j!!c! t! h!!r th!t n! d!s!st!r h!s !cc!mp!n!!d th!
+c!mm!nc!m!nt !f !n !nt!rpr!s! wh!ch y!! h!v! r!g!rd!d w!th s!ch !v!l
+...
+```
 
 (This is wrong)
 
@@ -278,15 +331,21 @@ Check the wrong file is on disk
 
 # Undoing a mistake
 
-Rescan in `git-gui`
+```
+$ git status
+On branch master
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+        modified:   frankenstein.txt
 
-Select the file in `git-gui`
-
-Commit -> Revert changes
-
-(Accept the warning)
-
-Refresh the file in the text editor
+no changes added to commit (use "git add" and/or "git commit -a")
+$ git restore frankenstein.txt
+$ git status
+On branch master
+nothing to commit, working tree clean
+$ cat frankenstein.txt 
+```
 
 Feel happy
 
@@ -298,7 +357,13 @@ Feel happy
 
 ("Tree" means collection of files and folders; a "directory tree")
 
-![Three trees](three-trees.png)
+.float-left[![Three trees](three-trees.png)]
+
+<br><br><br><br><br><br><br><br>
+
+* `$ git restore file.txt` <br>Index → Working (recovers mistake)
+* `$ git restore --staged file.txt`<br> HEAD → Index (undoes `add`)
+* `$ git restore --staged --worktree --source=HEAD file.txt`<br> HEAD → Index → Working
 
 ???
 
@@ -313,32 +378,9 @@ Feel happy
 
 ---
 
-# Command line fun!
-
-.float-right[![Three trees](three-trees.png)]
-
-1. `$ git status`
-2. Replace all the `e` with `!`
-3. `$ git status`
-4. `$ git checkout -- frankenstein.txt`
-5. `$ git status`
-6. Check the file
-
-Note: `git checkout` takes arguments 
-
-`$ git checkout <commit> [--] <file> <file> ...`
-
-If you don't specify a commit, Git assumes you mean `HEAD`
-
-???
-
-Lots of `git status` commands to see what's going on as we do things
-
----
-
 # Let's really mess things up!
 
-.float-right[![Checkout from earlier commit](checkout-from-earlier-commit.png)]
+.float-right[![Restore from earlier commit](restore-from-earlier-commit.png)]
 
 1. `$ git status`
 2. Replace all the `e` with `!`
@@ -348,9 +390,14 @@ Lots of `git status` commands to see what's going on as we do things
 6. `$ git commit -m "No more vowels"`
 7. `$ git status`
 
-### What have we done?
-### How do we get the good file back?
-`$ git checkout <commit> [--] <file> <file> ...`
+### What have we done? How do we get the good file back?
+
+```
+$ git help restore
+
+SYNOPSIS
+       git restore [<options>] [--source=<tree>] [--staged] [--worktree] [--] <pathspec>...
+```
 
 Hint: `HEAD~` means "parent of `HEAD`"
 * Note difference between `~` (tilde) and `-` (dash)
@@ -359,7 +406,7 @@ Hint: `HEAD~` means "parent of `HEAD`"
 
 # Let's really mess things up!
 
-.float-right[![Checkout from earlier commit after checkout](checkout-from-earlier-commit-after-checkout.png)]
+.float-right[![Restore from earlier commit after restore](restore-from-earlier-commit-after-restore.png)]
 
 1. `$ git status`
 2. Replace all the `e` with `!`
@@ -371,12 +418,11 @@ Hint: `HEAD~` means "parent of `HEAD`"
 
 ## Fixed with
 
-`$ git checkout HEAD~ -- frankenstein.txt`
+`$ git restore --source=HEAD~ frankenstein.txt`
 
 * `HEAD~` is "Parent of `HEAD`"
 * `HEAD~~` or `HEAD~2` is "Grandparent of `HEAD`"
 * `HEAD~~~` or `HEAD~3` is "Great grandparent of `HEAD`"
-
 
 ---
 

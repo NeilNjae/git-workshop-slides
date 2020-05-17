@@ -87,7 +87,7 @@
   <body>
     <textarea id="source">
 
-# Part 3
+# Part 2
 
 ## Branch and merge
 
@@ -141,8 +141,8 @@ Let's work on the "feature" of changing headers to capital letters
 `$ git branch capitals` : creates a new branch
 * `$ git status`
 * `$ git branch`
-* refresh `gitk`
-* `$ git checkout capitals`
+* `$ git branch capitals`
+* `$ git switch capitals`
 * `$ git status`
 * `$ git branch`
 
@@ -155,7 +155,6 @@ In **just one** text file
 * `$ git status`
 * `$ git commit -am "Started adding capitals"`
 * `$ git status`
-* refresh `gitk`
 
 ???
 
@@ -165,6 +164,8 @@ Atom: ^K ^U
 
 Visual Studio: Ctrl + Shift + U
 
+Vim: gUU
+
 ---
 
 # Branches isolate change
@@ -173,17 +174,15 @@ Visual Studio: Ctrl + Shift + U
 
 Look at your text file
 
-* `$ git checkout master`
+* `$ git switch master`
 * `$ git status`
 
 Look at the file again
 
-* `$ git checkout capitals`
+* `$ git switch capitals`
 * `$ git status`
 
 Look at the file again
-
-(`git gui` also switches branches)
 
 ---
 
@@ -193,7 +192,7 @@ Look at the file again
 
 1. Make all-caps all the titles and "commit" headers in both files
 2. Save the file, don't `git add` or `git commit`
-3. `$ git checkout master`
+3. `$ git switch master`
 
 `$ git commit -am 'Headers now uppercase'`
 
@@ -203,9 +202,7 @@ Look at the file again
 
 ## In master
 
-* `$ git checkout master`
-* Refresh `gitk`
-* `gitk` > File > List references
+* `$ git switch master`
 
 Want to add extra paragraphs to both text files 
 
@@ -213,11 +210,9 @@ Want to add extra paragraphs to both text files
 
 * We'll create a new branch to do that
 * `$ git branch extra_text`
-* `$ git checkout extra_text`
+* `$ git switch extra_text`
 
 Add a new paragraph to each text file, `add` and `commit`
-
-Refresh `gitk`
 
 ---
 
@@ -229,7 +224,7 @@ To incorporate `extra_text` branch into `master`
 
 .float-right[![Branches](branches2.png)]
 
-1. `$ git checkout master`
+1. `$ git switch master`
 2. `$ git merge extra_text`
 
 _Fast-forward_ merge: just slide the `master` branch pointer along
@@ -238,7 +233,6 @@ Don't need the `extra_text` branch any more
 
 * `$ git branch -d extra_text`
 * `$ git branch`
-* Refresh `gitk`
 
 ---
 
@@ -252,10 +246,8 @@ Can't fast forward
 
 Create a _new_ **merge** commit 
 
-1. `$ git checkout master`
+1. `$ git switch master`
 2. `$ git merge capitals -m "Merging capitals as headers"`
-
-Refresh `gitk`
 
 .float-right[![Branches](branches4.png)]
 
@@ -278,8 +270,6 @@ Its productions and features may be without example...
 ---
 
 # More log fun
-
-Refresh the view in `gitk`
 
 `$ git log --graph --oneline`
 
@@ -309,8 +299,6 @@ Commit with two parents
 
 `$ git diff HEAD^2`
 
-Also in `gitk`
-
 ---
 
 # Making life difficult
@@ -322,7 +310,7 @@ First, undo this merge
 Create a branch `fancy`
 
 * `$ git branch fancy`
-* `$ git checkout fancy`
+* `$ git switch fancy`
 
 In `fancy`, in **one file**, use fancy words for the headings: `# Most fancy commit line 1`
 
@@ -332,7 +320,7 @@ Add and commit the changes
 
 Merge `fancy` into `master`
 
-* `$ git checkout master`
+* `$ git switch master`
 * `$ git merge fancy`
 
 Don't delete `fancy` yet
@@ -343,7 +331,7 @@ Don't delete `fancy` yet
 
 When we now merge `capitals` into `master`, what should Git do?
 
-`$ git checkout master`
+`$ git switch master`
 
 `$ git merge capitals -m "Merging capitals as headers"`
 ```
@@ -373,7 +361,7 @@ Look in the file
 
 `$ git merge --abort`
 
-Chocolate
+Get some chocolate
 
 ---
 
@@ -403,9 +391,9 @@ Look into tools like _KDiff3_ and _Meld_ for GUIs
 
 ---
 
-.float-right[![expanding brain 3](expanding-brain-3.jpg)]
+.float-right[![expanding brain 2](expanding-brain-2.jpg)]
 
-# End of part 3
+# End of part 2
 
 * Branches
 * Merge
