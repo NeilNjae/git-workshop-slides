@@ -1,8 +1,6 @@
 # Carmilla, by J. Sheridan LeFanu
 > Text from https://www.gutenberg.org/cache/epub/10007/pg10007.txt
 
-1872
-
 # Commit 1
 
 In Styria, we, though by no means magnificent people, inhabit a castle,

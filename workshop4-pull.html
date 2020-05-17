@@ -131,6 +131,7 @@ Github is
 * limited
 
 ---
+exclude: true
 
 # Publishing with Github desktop
 
@@ -144,17 +145,16 @@ Look on Github
 
 ---
 
-exclude: true
-
 # Create new repo on Github
 
 .float-right[![Make new repo](make-new-repo.png)]
 
-`$ git checkout master`
+`$ git switch master`
 
 `$ git remote add origin  git@github.com:NeilNjae/neils-git-workshop.git`
 
 `git push --set-upstream origin master`
+* `-u` is short form of `--set-upstream`
 
 Refresh the view on Github
 
@@ -174,7 +174,7 @@ Any number of remotes
 
 Typically, just one, nicknamed `origin`
 
-`$ git show remote -v`
+`$ git remote -v`
 
 ---
 
@@ -213,14 +213,13 @@ A _local_ branch that's connected to a _remote_ ("upstream") branch
 
 # Update and push
 
-* Create, checkout a new  branch
+* Create, switch to a new  branch
 * Create a new file on this branch
-* `$ git log --oneline`
-* Refresh `gitk`
-* Push the changes (use Github Desktop)
+* Commit the changes
+* Push the changes 
+  `git push -u origin dracula`
 * Refresh the repo on Github website
 * `$ git log --oneline`
-* Refresh `gitk`
 
 ---
 
@@ -257,7 +256,7 @@ A _local_ branch that's connected to a _remote_ ("upstream") branch
 
 1. Talk to the person on your _left_
 2. Find their repo and fork their repo (on Github website)
-3. Clone the fork to your PC (use Github Desktop)
+3. Clone the fork to your PC 
 4. Create a new branch
 5. Add a file saying something nice about the person to your left
    * Remember this is all public
